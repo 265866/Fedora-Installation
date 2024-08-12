@@ -146,8 +146,32 @@ fi
 echo -e "${CYAN}Autoremoving unneeded dependencies${NC}"
 dnf autoremove -y
 
+mkdir -p ~/.local/share/backgrounds/.hidden && \
+wget -O ~/.local/share/backgrounds/.hidden/background.png https://raw.githubusercontent.com/265866/Fedora-Installation/main/background.png && \
+gsettings set org.gnome.desktop.background picture-uri "file:///home/$(whoami)/.local/share/backgrounds/.hidden/background.png" && \
+chmod 444 ~/.local/share/backgrounds/.hidden/background.png
+
+
+# Ask if user wants dark mode and theming and stuff
+if prompt_yes_no "${BLUE}Would you like to use darkmode? (y/n): ${NC}"; then
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+    mkdir -p ~/.local/share/backgrounds/.hidden
+    wget -O ~/.local/share/backgrounds/.hidden/background.png https://raw.githubusercontent.com/265866/Fedora-Installation/main/background.png
+    gsettings set org.gnome.desktop.background picture-uri "file:///home/$(whoami)/.local/share/backgrounds/.hidden/background.png"
+    gsettings set org.gnome.desktop.background picture-uri-dark "file:///home/$(whoami)/.local/share/backgrounds/.hidden/background.png"
+    chmod 444 ~/.local/share/backgrounds/.hidden/background.png
+    dnf install -y gnome-tweaks mpv socat
+    flatpak install flathub com.mattjakeman.ExtensionManager -y
+    
+    echo -e "${GREEN}Libreoffice suite removed${NC}"
+else
+    echo -e "${YELLOW}Skipping Libreoffice suite removal${NC}"
+fi
+
+
 # Install Neofetch directly without using COPR
-dnf install -y neofetch
+dnf install -y neofetch htop
+
 neofetch
 
 # End of script
