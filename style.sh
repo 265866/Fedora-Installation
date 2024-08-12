@@ -9,7 +9,7 @@ unzip gnome-extensions-settings.zip -d gnome-extensions-settings
 cp -Rv Orchis-shell-MOD ~/themes
 cp -Rv fonts ~/.local/share/
 cp -Rv backgrounds ~/.local/share/
-dconf load /org/gnome/shell/extensions < gnome-extensions-settings/gnome-extensions-settings.conf
+dconf load /org/gnome/shell/extensions/ < gnome-extensions-settings/gnome-extensions-settings.conf
 cd ..
 git clone https://github.com/TaylanTatli/Sevi.git && cd Sevi/ && ./install.sh -a
 cd ..
