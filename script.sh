@@ -17,7 +17,7 @@ fi
 # Function to prompt yes/no questions
 function prompt_yes_no() {
     while true; do
-        read -p "$(echo -e $1)" yn
+        read -p "$(echo -e "$1")" yn
         case $yn in
             [Yy]* ) return 0;;
             [Nn]* ) return 1;;
@@ -28,7 +28,7 @@ function prompt_yes_no() {
 
 # Function to prompt for input
 function prompt_input() {
-    read -p "$(echo -e $1)" input
+    read -p "$(echo -e "$1")" input
     echo "$input"
 }
 
