@@ -126,6 +126,26 @@ else
     echo -e "${YELLOW}Skipping Fedora Workstation repositories removal${NC}"
 fi
 
+# Ask if user wants to remove default gnome apps
+if prompt_yes_no "${BLUE}Would you like to remove default Gnome apps (Maps, Weather, Contacts, Music)? (y/n): ${NC}"; then
+    dnf remove -y rhythmbox gnome-maps gnome-weather gnome-contacts gnome-photos gnome-music
+    echo -e "${GREEN}Default Gnome apps removed${NC}"
+else
+    echo -e "${YELLOW}Skipping Gnome apps removal${NC}"
+fi
+
+
+# Ask if user wants to remove default libreoffice apps
+if prompt_yes_no "${BLUE}Would you like to remove default Libreoffice apps? (y/n): ${NC}"; then
+    dnf remove -y libreoffice*
+    echo -e "${GREEN}Libreoffice suite removed${NC}"
+else
+    echo -e "${YELLOW}Skipping Libreoffice suite removal${NC}"
+fi
+
+echo -e "${CYAN}Autoremoving unneeded dependencies${NC}"
+dnf autoremove -y
+
 # Install Neofetch directly without using COPR
 dnf install -y neofetch
 neofetch
