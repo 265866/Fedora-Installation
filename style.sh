@@ -10,6 +10,9 @@ cp -Rv Orchis-shell-MOD ~/themes
 cp -Rv fonts ~/.local/share/
 cp -Rv backgrounds ~/.local/share/
 dconf load /org/gnome/shell/extensions/ < gnome-extensions-settings/gnome-extensions-settings.conf
+ln -sf $HOME/.themes/Orchis-Dark/gtk-4.0/gtk.css $HOME/.config/gtk-4.0
+ln -sf $HOME/.themes/Orchis-Dark/gtk-4.0/gtk-dark.css $HOME/.config/gtk-4.0
+ln -sf $HOME/.themes/Orchis-Dark/gtk-4.0/assets/ $HOME/.config/gtk-4.0
 cd ..
 git clone https://github.com/TaylanTatli/Sevi.git && cd Sevi/ && ./install.sh -a
 cd ..
