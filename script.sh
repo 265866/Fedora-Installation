@@ -40,7 +40,6 @@ echo -e "${GREEN}Hostname set to $hostname${NC}"
 # Update dnf configuration to improve performance
 echo -e "${CYAN}Updating dnf configuration for improved performance...${NC}"
 echo -e "\nmax_parallel_downloads=10\nfastestmirror=True\ndefaultyes=True" | tee -a /etc/dnf/dnf.conf > /dev/null
-echo -e "${GREEN}dnf configuration updated${NC}"
 
 # Ask if user wants to install DNF plugins
 if prompt_yes_no "${BLUE}Would you like to install DNF plugins? (y/n): ${NC}"; then
@@ -51,7 +50,7 @@ else
 fi
 
 # Ask if user wants to upgrade all packages
-if prompt_yes_no "${BLUE}Would you like to upgrade all packages? (y/n): ${NC}"; then
+if prompt_yes_no "${BLUE}Would you like to upgrade packages? (y/n): ${NC}"; then
     dnf upgrade --refresh -y
     echo -e "${GREEN}All packages upgraded${NC}"
 else
@@ -61,7 +60,6 @@ fi
 # Enable the Cisco OpenH264 repository for multimedia codecs
 echo -e "${CYAN}Enabling the Cisco OpenH264 repository...${NC}"
 dnf config-manager --enable fedora-cisco-openh264
-echo -e "${GREEN}Cisco OpenH264 repository enabled${NC}"
 
 # Ask if user wants to install RPM Fusion repositories
 if prompt_yes_no "${BLUE}Would you like to install RPM Fusion repositories? (y/n): ${NC}"; then
@@ -101,18 +99,15 @@ fi
 # Enable Network Time Protocol for accurate timekeeping
 echo -e "${CYAN}Enabling Network Time Protocol (NTP) for accurate timekeeping...${NC}"
 timedatectl set-ntp true
-echo -e "${GREEN}NTP enabled${NC}"
 
 # Set the system to performance power mode
 echo -e "${CYAN}Setting the system to performance power mode...${NC}"
 systemctl start power-profiles-daemon
 powerprofilesctl set performance
-echo -e "${GREEN}Performance power mode set${NC}"
 
 # Disable mouse acceleration
 echo -e "${CYAN}Disabling mouse acceleration...${NC}"
 gsettings set org.gnome.desktop.peripherals.mouse accel-profile 'flat'
-echo -e "${GREEN}Mouse acceleration disabled${NC}"
 
 # Ask if user wants to disable and mask automatic bug reporting services (ABRT)
 if prompt_yes_no "${BLUE}Would you like to disable and mask automatic bug reporting services (ABRT)? (y/n): ${NC}"; then
@@ -124,7 +119,7 @@ else
 fi
 
 # Ask if user wants to remove Fedora Workstation repositories
-if prompt_yes_no "${BLUE}Would you like to remove Fedora Workstation repositories? (y/n): ${NC}"; then
+if prompt_yes_no "${BLUE}Would you like to remove Fedora Workstation repositories (more telemetry)? (y/n): ${NC}"; then
     dnf remove -y fedora-workstation-repositories
     echo -e "${GREEN}Fedora Workstation repositories removed${NC}"
 else
@@ -133,7 +128,6 @@ fi
 
 # Install Neofetch directly without using COPR
 dnf install -y neofetch
-echo -e "${GREEN}Neofetch installed${NC}"
 neofetch
 
 # End of script
