@@ -33,8 +33,7 @@ function prompt_input() {
 }
 
 # Ask for the desired hostname
-echo -e "${CYAN}Enter your desired hostname (e.g., colton-desktop):${NC}"
-hostname=$(prompt_input "> ")
+hostname=$(prompt_input "${CYAN}Enter your desired hostname (e.g., colton-desktop): ${NC}")
 hostnamectl set-hostname "$hostname"
 echo -e "${GREEN}Hostname set to $hostname${NC}"
 
@@ -132,15 +131,10 @@ else
     echo -e "${YELLOW}Skipping Fedora Workstation repositories removal${NC}"
 fi
 
-# Ask if user wants to enable COPR repository for Neofetch and install Neofetch
-if prompt_yes_no "${BLUE}Would you like to install Neofetch? (y/n): ${NC}"; then
-    dnf copr enable -y konimex/neofetch
-    dnf install -y neofetch
-    echo -e "${GREEN}Neofetch installed${NC}"
-    neofetch
-else
-    echo -e "${YELLOW}Skipping Neofetch installation${NC}"
-fi
+# Install Neofetch directly without using COPR
+dnf install -y neofetch
+echo -e "${GREEN}Neofetch installed${NC}"
+neofetch
 
 # End of script
 echo -e "${CYAN}System setup complete!${NC}"
