@@ -13,3 +13,4 @@ dconf load /org/gnome/shell/extensions/ < gnome-extensions-settings/gnome-extens
 cd ..
 git clone https://github.com/TaylanTatli/Sevi.git && cd Sevi/ && ./install.sh -a
 cd ..
+sudo rm -rf Fedora-Installation Orchis-theme Sevi
