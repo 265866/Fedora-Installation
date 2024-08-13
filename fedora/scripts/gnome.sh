@@ -74,8 +74,8 @@ dnf autoremove -y
 if prompt_yes_no "${BLUE}Would you like to use a dark theme? (y/n): ${NC}"; then
     sudo -u "$(logname)" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u $(logname))/bus" gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
     sudo -u "$(logname)" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u $(logname))/bus" gsettings set org.gnome.desktop.wm.preferences button-layout 'appmenu:minimize,maximize,close'
-    sudo -u "$(logname)" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u $(logname))/bus" mkdir -p ~/.local/share/backgrounds/.hidden
-    chown -R $(logname):$(logname) /home/$(logname)/.local/share/backgrounds/.hidden
+    sudo -u "$(logname)" mkdir -p /home/"$(logname)"/.local/share/backgrounds/.hidden
+    sudo chown -R "$(logname)":"$(logname)" /home/"$(logname)"/.local/share/backgrounds/.hidden
     sudo -u "$(logname)" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u $(logname))/bus" bash -c 'HOME=/home/$(logname) wget -O ~/.local/share/backgrounds/.hidden/background.png https://raw.githubusercontent.com/265866/Fedora-Installation/main/fedora/background.png'
     sudo -u "$(logname)" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u $(logname))/bus" bash -c 'gsettings set org.gnome.desktop.background picture-uri "file:///home/$(logname)/.local/share/backgrounds/.hidden/background.png"'
     sudo -u "$(logname)" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u $(logname))/bus" bash -c 'gsettings set org.gnome.desktop.background picture-uri-dark "file:///home/$(logname)/.local/share/backgrounds/.hidden/background.png"'
