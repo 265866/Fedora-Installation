@@ -1,7 +1,17 @@
 #!/bin/bash
 
+# Check for unattended flag
+UNATTENDED=0
+if [[ "$1" == "--unattended" ]]; then
+    UNATTENDED=1
+fi
+
 # Function to prompt yes/no questions
 function prompt_yes_no() {
+    if [ $UNATTENDED -eq 1 ]; then
+        return 0 # Assume "yes" for all prompts
+    fi
+
     while true; do
         read -p "$(echo -e "$1")" yn
         case $yn in
@@ -12,14 +22,27 @@ function prompt_yes_no() {
     done
 }
 
+# Define color variables
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
 # Function to prompt for input
 function prompt_input() {
-    read -p "$(echo -e "$1")" input
-    echo "$input"
+    if [ $UNATTENDED -eq 1 ]; then
+        echo "$2" # Use the provided default value in unattended mode
+    else
+        read -p "$(echo -e "$1")" input
+        echo "$input"
+    fi
 }
 
 # Ask for the desired hostname
-hostname=$(prompt_input "${CYAN}Enter your desired hostname (e.g., $(logname)-desktop): ${NC}")
+DEFAULT_HOSTNAME="$(logname)-machine"
+hostname=$(prompt_input "${CYAN}Enter your desired hostname (e.g., ${DEFAULT_HOSTNAME}): ${NC}" "${DEFAULT_HOSTNAME}")
 hostnamectl set-hostname "$hostname"
 echo -e "${GREEN}Hostname set to $hostname${NC}"
 
