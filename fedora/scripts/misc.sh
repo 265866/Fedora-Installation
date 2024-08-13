@@ -100,6 +100,13 @@ else
     echo -e "${YELLOW}Skipping installing Lunar Client${NC}"
 fi
 
+# Ask if user wants Nvidia Drivers
+if prompt_yes_no "${BLUE}Would you like to install Nvidia Drivers? (y/n): ${NC}"; then
+    dnf install -y akmod-nvidia xorg-x11-drv-nvidia-cuda
+    echo -e "${GREEN}Nvidia Drivers installed${NC}"
+else
+    echo -e "${YELLOW}Skipping installing Nvidia Drivers${NC}"
+fi
 
 # Install Neofetch and htop
 dnf install -y neofetch htop
