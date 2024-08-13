@@ -38,17 +38,6 @@ else
     echo -e "${YELLOW}Skipping installing Golang${NC}"
 fi
 
-# Ask if user wants Visual Studio Code
-if prompt_yes_no "${BLUE}Would you like to install Visual Studio Code? (y/n): ${NC}"; then
-    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-    echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
-    dnf check-update
-    dnf install -y code
-    echo -e "${GREEN}Visual Studio Code installed${NC}"
-else
-    echo -e "${YELLOW}Skipping installing Visual Studio Code${NC}"
-fi
-
 # Ask if user wants NodeJS
 if prompt_yes_no "${BLUE}Would you like to install NodeJS? (y/n): ${NC}"; then
     dnf install -y nodejs
@@ -83,4 +72,12 @@ if prompt_yes_no "${BLUE}Would you like to install Docker? (y/n): ${NC}"; then
     echo -e "${GREEN}Docker installed${NC}"
 else
     echo -e "${YELLOW}Skipping installing Docker${NC}"
+fi
+
+# Ask if user wants Python3
+if prompt_yes_no "${BLUE}Would you like to install Python3? (y/n): ${NC}"; then
+    dnf install -y python3
+    echo -e "${GREEN}Python3 installed${NC}"
+else
+    echo -e "${YELLOW}Skipping installing Python3${NC}"
 fi

@@ -105,3 +105,31 @@ timedatectl set-ntp true
 echo -e "${CYAN}Setting the system to performance power mode...${NC}"
 systemctl start power-profiles-daemon
 powerprofilesctl set performance
+
+# Ask if user wants to disable and mask automatic bug reporting services (ABRT)
+if prompt_yes_no "${BLUE}Would you like to disable and mask automatic bug reporting services (ABRT)? (y/n): ${NC}"; then
+    systemctl disable --now abrt-watch-log abrt-journal-core abrt-oops abrt-xorg abrt-journal-qabrtd
+    systemctl mask abrt-watch-log abrt-journal-core abrt-oops abrt-xorg abrt-journal-qabrtd
+    echo -e "${GREEN}ABRT services disabled and masked${NC}"
+else
+    echo -e "${YELLOW}Skipping ABRT services disablement${NC}"
+fi
+
+# Ask if user wants to remove Fedora Workstation repositories
+if prompt_yes_no "${BLUE}Would you like to remove Fedora Workstation repositories (more telemetry)? (y/n): ${NC}"; then
+    dnf remove -y fedora-workstation-repositories
+    echo -e "${GREEN}Fedora Workstation repositories removed${NC}"
+else
+    echo -e "${YELLOW}Skipping Fedora Workstation repositories removal${NC}"
+fi
+
+# Ask if user wants to remove default libreoffice apps
+if prompt_yes_no "${BLUE}Would you like to remove default Libreoffice apps? (y/n): ${NC}"; then
+    dnf remove -y libreoffice*
+    echo -e "${GREEN}Libreoffice suite removed${NC}"
+else
+    echo -e "${YELLOW}Skipping Libreoffice suite removal${NC}"
+fi
+
+echo -e "${CYAN}Autoremoving unneeded dependencies${NC}"
+dnf autoremove -y
