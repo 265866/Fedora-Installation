@@ -25,7 +25,7 @@ if prompt_yes_no "${BLUE}Would you like to install Visual Studio Code? (y/n): ${
     sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
     echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
     dnf check-update
-    dnf install code
+    dnf install -y code
     echo -e "${GREEN}Visual Studio Code installed${NC}"
 else
     echo -e "${YELLOW}Skipping installing Visual Studio Code${NC}"
@@ -41,8 +41,8 @@ fi
 
 # Ask if user wants Bun
 if prompt_yes_no "${BLUE}Would you like to install Bun? (y/n): ${NC}"; then
-    curl -fsSL https://bun.sh/install | bash
-    source ~/.bashrc
+    sudo -u "$(logname)" bash -c 'curl -fsSL https://bun.sh/install | bash'
+    sudo -u "$(logname)" bash -c 'source ~/.bashrc'
     echo -e "${GREEN}Bun installed${NC}"
 else
     echo -e "${YELLOW}Skipping installing Bun${NC}"
@@ -50,9 +50,19 @@ fi
 
 # Ask if user wants Rust
 if prompt_yes_no "${BLUE}Would you like to install Rust? (y/n): ${NC}"; then
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-    . "$HOME/.cargo/env"
+    sudo -u "$(logname)" bash -c 'curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh'
+    sudo -u "$(logname)" bash -c '. "$HOME/.cargo/env"'
     echo -e "${GREEN}Rust installed${NC}"
 else
     echo -e "${YELLOW}Skipping installing Rust${NC}"
+fi
+
+# Ask if user wants Docker
+if prompt_yes_no "${BLUE}Would you like to install Docker? (y/n): ${NC}"; then
+    dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+    dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    systemctl start docker
+    echo -e "${GREEN}Docker installed${NC}"
+else
+    echo -e "${YELLOW}Skipping installing Docker${NC}"
 fi

@@ -6,35 +6,7 @@ if [ "$(id -u)" == "0" ]; then
     exit 1
 fi
 
-# Prompt the user if they want to make a new SSH key
-while true; do
-    read -p "Do you want to generate a new SSH key? (y/n): " -n 1 GENERATE_SSH_KEY
-    echo
-
-    # Check if the input is valid
-    if [[ $GENERATE_SSH_KEY =~ ^[YyNn]$ ]]; then
-        echo
-        break
-    else
-        echo "Invalid input. Please enter 'y' or 'n'"
-    fi
-done
-
-if [[ $GENERATE_SSH_KEY =~ ^[Yy]$ ]]; then
-    SSH_PUB_KEY=$(RUNNING_NESTED="true" ./ssh-generate.sh 2>&1 >/dev/tty)
-else
-    # Prompt to select the SSH key from the list
-    echo "Select the SSH public key to use for GitHub:"
-    select SSH_PUB_KEY in $(find ~/.ssh -type f -name "*.pub"); do
-        if [ -z "$SSH_PUB_KEY" ]; then
-            echo "Invalid selection. Please try again."
-            continue
-        fi
-
-        echo "Selected public key: $SSH_PUB_KEY"
-        break
-    done
-fi
+SSH_PUB_KEY=$(./scripts/ssh-generate.sh 2>&1 >/dev/tty)
 
 read -p "Enter your GitHub username: " GITHUB_USERNAME
 

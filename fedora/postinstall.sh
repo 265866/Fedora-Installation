@@ -40,9 +40,6 @@ bash ./scripts/gnome.sh
 echo -e "${CYAN}Running coding tools installation...${NC}"
 bash ./scripts/coding.sh
 
-echo -e "${CYAN}Running Docker installation...${NC}"
-bash ./scripts/docker.sh
-
 echo -e "${CYAN}Running GitHub setup...${NC} (as $USER_NAME)"
 sudo -u "$USER_NAME" bash ./scripts/github.sh
 

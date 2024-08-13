@@ -14,7 +14,7 @@ function prompt_yes_no() {
 
 # Disable mouse acceleration
 echo -e "${CYAN}Disabling mouse acceleration...${NC}"
-gsettings set org.gnome.desktop.peripherals.mouse accel-profile 'flat'
+sudo -u "$(logname)" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u $(logname))/bus" gsettings set org.gnome.desktop.peripherals.mouse accel-profile 'flat'
 
 # Ask if user wants to disable and mask automatic bug reporting services (ABRT)
 if prompt_yes_no "${BLUE}Would you like to disable and mask automatic bug reporting services (ABRT)? (y/n): ${NC}"; then
@@ -54,12 +54,13 @@ dnf autoremove -y
 
 # Ask if user wants dark mode and theming and stuff
 if prompt_yes_no "${BLUE}Would you like to use a dark theme? (y/n): ${NC}"; then
-    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-    gsettings set org.gnome.desktop.wm.preferences button-layout 'appmenu:minimize,maximize,close'
-    mkdir -p ~/.local/share/backgrounds/.hidden
-    wget -O ~/.local/share/backgrounds/.hidden/background.png https://raw.githubusercontent.com/265866/Fedora-Installation/main/fedora/background.png
-    gsettings set org.gnome.desktop.background picture-uri "file:///home/$(whoami)/.local/share/backgrounds/.hidden/background.png"
-    gsettings set org.gnome.desktop.background picture-uri-dark "file:///home/$(whoami)/.local/share/backgrounds/.hidden/background.png"
+    sudo -u "$(logname)" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u $(logname))/bus" gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+    sudo -u "$(logname)" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u $(logname))/bus" gsettings set org.gnome.desktop.wm.preferences button-layout 'appmenu:minimize,maximize,close'
+    sudo -u "$(logname)" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u $(logname))/bus" mkdir -p ~/.local/share/backgrounds/.hidden
+    chown -R $(logname):$(logname) /home/$(logname)/.local/share/backgrounds/.hidden
+    sudo -u "$(logname)" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u $(logname))/bus" bash -c 'HOME=/home/$(logname) wget -O ~/.local/share/backgrounds/.hidden/background.png https://raw.githubusercontent.com/265866/Fedora-Installation/main/fedora/background.png'
+    sudo -u "$(logname)" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u $(logname))/bus" bash -c 'gsettings set org.gnome.desktop.background picture-uri "file:///home/$(logname)/.local/share/backgrounds/.hidden/background.png"'
+    sudo -u "$(logname)" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u $(logname))/bus" bash -c 'gsettings set org.gnome.desktop.background picture-uri-dark "file:///home/$(logname)/.local/share/backgrounds/.hidden/background.png"'
     chmod 444 ~/.local/share/backgrounds/.hidden/background.png
     dnf install -y gnome-tweaks gtk3 gnome-themes-extra gtk-murrine-engine sassc
     flatpak install flathub com.mattjakeman.ExtensionManager -y
