@@ -149,6 +149,7 @@ dnf autoremove -y
 # Ask if user wants dark mode and theming and stuff
 if prompt_yes_no "${BLUE}Would you like to use a dark theme? (y/n): ${NC}"; then
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+    gsettings set org.gnome.desktop.wm.preferences button-layout 'appmenu:minimize,maximize,close'
     mkdir -p ~/.local/share/backgrounds/.hidden
     wget -O ~/.local/share/backgrounds/.hidden/background.png https://raw.githubusercontent.com/265866/Fedora-Installation/main/background.png
     gsettings set org.gnome.desktop.background picture-uri "file:///home/$(whoami)/.local/share/backgrounds/.hidden/background.png"
