@@ -50,7 +50,8 @@ fi
 
 # Ask if user wants Rust
 if prompt_yes_no "${BLUE}Would you like to install Rust? (y/n): ${NC}"; then
-    sudo -u "$(logname)" bash -c 'curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh'
+    sudo -u "$(logname)" bash -c 'curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y'
+curl https://sh.rustup.rs -sSf | sh -s -- -y
     sudo -u "$(logname)" bash -c '. "$HOME/.cargo/env"'
     echo -e "${GREEN}Rust installed${NC}"
 else
