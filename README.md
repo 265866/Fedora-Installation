@@ -27,7 +27,7 @@ chmod +x ./postinstall.sh
 sudo ./postinstall.sh
 ```
 
-To run the main script in unattended mode, follow the instructions above, except add an --unattended flag to `postinstall.sh`
+To run the main script in unattended mode, follow the instructions above, except add an `--unattended` flag to `postinstall.sh`
 
 ```bash
 git clone https://github.com/265866/Fedora-Installation.git
@@ -39,9 +39,11 @@ sudo ./postinstall.sh --unattended
 ### Running Subscripts
 
 Looking to only do certain things? Feel free to run subscripts within the `/scripts` directory, you can also use the --unattended flag to run these.
-- `system.sh`
+- **`system.sh`**
   1) Asks for and sets your machine's hostname (defaults to `$(logname)-machine` in unattended mode)
-  2) Updates your DNF configuration by increasing your max parallel download limit and using the fastest mirror by default
+  2) Updates your DNF configuration by
+    - Increasing the max parallel download limit to 10
+    - Using the fastest mirror by default
   3) Installs DNF plugins (dnf-plugins-core)
   4) Upgrades your packages
   5) Enables the Cisco OpenH264 repository for multimedia codecs 
@@ -54,21 +56,21 @@ Looking to only do certain things? Feel free to run subscripts within the `/scri
   12) Removes Fedora Workstation Repositories
   13) Removes default Libreoffice apps
   14) Removes unneeded dependencies
-- `gnome.sh`
+- **`gnome.sh`**
   1) Disables mouse acceleration
   2) Removes default Gnome apps
   3) Installs a darkmode theme
-- `coding.sh`
+- **`coding.sh`**
   1) Installs Golang
   2) Installs NodeJS
   3) Installs Bun
   4) Installs Rust
   5) Installs Docker
   6) Installs Python3
-- `github.sh` (not available unattended)
+- **`github.sh`** (not available unattended)
   1) Asks for and sets your git config user.name and user.email
   2) Generates an SSH key, adds it to your system, and tells you to add it to your github account (https://github.com/settings/keys)
-- `misc.sh`
+- **`misc.sh`**
   1) Adds the Flathub repository for Flatpak
   2) Installs Visual Studio Code
   3) Installs Telegram
