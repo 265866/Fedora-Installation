@@ -36,7 +36,7 @@ else
     done
 fi
 
-read -p "Enter the GitHub username: " GITHUB_USERNAME
+read -p "Enter your GitHub username: " GITHUB_USERNAME
 
 if [ -z "${GITHUB_USERNAME}" ]; then
     echo "GitHub username cannot be empty."
@@ -45,7 +45,7 @@ fi
 
 git config --global user.name "$GITHUB_USERNAME"
 
-read -p "Enter the GitHub email: " GITHUB_EMAIL
+read -p "Enter your GitHub email: " GITHUB_EMAIL
 
 if [ -z "${GITHUB_EMAIL}" ]; then
     echo "GitHub email cannot be empty."
