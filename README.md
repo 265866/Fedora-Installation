@@ -61,17 +61,17 @@ Looking to only do certain things? Feel free to run subscripts within the `/scri
   - Installs
     1) HTop
     2) Neofetch
-    3) Installs Telegram
-    4) Installs Spotify
-    5) Installs OBS
-    6) Installs WireGuard
-    7) Installs Steam
-    8) Installs Discord
-    9) Installs Prism Launcher
-    10) Installs VLC
-    11) Installs Lunar Client
-    12) Installs Nvidia Drivers
-    13) Installs Visual Studio Code
+    3) Telegram
+    4) Spotify
+    5) OBS
+    6) WireGuard
+    7) Steam
+    8) Discord
+    9) Prism Launcher
+    10) VLC
+    11) Lunar Client
+    12) Nvidia Drivers
+    13) Visual Studio Code
     
 
 ## Extension Manager Settings
