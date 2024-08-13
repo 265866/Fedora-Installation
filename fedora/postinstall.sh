@@ -26,7 +26,7 @@ function prompt_yes_no() {
     done
 }
 
-chmod +x /scripts/*
+chmod +x ./scripts/*
 
 # Get the normal user's username
 USER_NAME=$(logname)
