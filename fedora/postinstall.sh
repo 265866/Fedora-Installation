@@ -14,6 +14,18 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
+# Function to prompt yes/no questions
+function prompt_yes_no() {
+    while true; do
+        read -p "$(echo -e "$1")" yn
+        case $yn in
+            [Yy]* ) return 0;;
+            [Nn]* ) return 1;;
+            * ) echo -e "${YELLOW}Please answer y or n.${NC}";;
+        esac
+    done
+}
+
 # Get the normal user's username
 USER_NAME=$(logname)
 
@@ -36,3 +48,11 @@ echo -e "${CYAN}Running miscellaneous installations...${NC}"
 bash ./scripts/misc.sh
 
 echo -e "${CYAN}System setup complete!${NC}"
+
+# Ask if the user wants to reboot the system
+if prompt_yes_no "${BLUE}Would you like to reboot the system now? (y/n): ${NC}"; then
+    echo -e "${GREEN}Rebooting system...${NC}"
+    reboot
+else
+    echo -e "${YELLOW}Reboot skipped. Please remember to reboot later to finish installing everything.${NC}"
+fi
