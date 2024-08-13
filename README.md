@@ -31,6 +31,7 @@ sudo ./postinstall.sh
 ```
 
 To run the main script in unattended mode, add the `--unattended` flag
+
 **By default, the script, not ran in unattended mode, will ask you if you want to do each step (y/n)**
 
 ```bash
